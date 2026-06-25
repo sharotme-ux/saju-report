@@ -183,7 +183,7 @@ footer{text-align:center;padding:26px 0;border-top:1px solid var(--border);font-
 
 <!-- 운세 레이어 -->
 <section>
-  <div class="sec-title">🌊 운세 흐름 — 대운 · 세운 · 월운 · 일운</div>
+  <div class="sec-title">🌊 운세 흐름 — 대운 · 세운 · 월운 · 일운 · 시운</div>
   <div class="layers">
     <!-- 대운 고정 -->
     <div class="fc dw au">
@@ -212,6 +212,13 @@ footer{text-align:center;padding:26px 0;border-top:1px solid var(--border);font-
       <div class="fc-gz"><span class="fc-stem" id="iw-stem">-</span><span class="fc-branch" id="iw-branch">-</span><span class="fc-kr" id="iw-kr"></span></div>
       <div class="tags" id="iw-tags"></div>
       <div class="fc-desc" id="iw-desc"></div>
+    </div>
+    <!-- 시운 동적 -->
+    <div class="fc hw au">
+      <div class="fc-lbl" id="hw-lbl">時 運 (실시간)</div>
+      <div class="fc-gz"><span class="fc-stem" id="hw-stem">-</span><span class="fc-branch" id="hw-branch">-</span><span class="fc-kr" id="hw-kr"></span></div>
+      <div class="tags" id="hw-tags"></div>
+      <div class="fc-desc" id="hw-desc"></div>
     </div>
   </div>
 </section>
@@ -245,6 +252,17 @@ footer{text-align:center;padding:26px 0;border-top:1px solid var(--border);font-
     <table>
       <thead><tr><th>날짜</th><th>요일</th><th>일주 (日柱)</th><th>天干 십성</th><th>地支 12운성</th><th>오늘의 한마디</th></tr></thead>
       <tbody id="week-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 12시진 미리보기 -->
+<section>
+  <div class="sec-title">⏰ 오늘의 12시진 미리보기 (실시간)</div>
+  <div class="week-wrap">
+    <table>
+      <thead><tr><th>시진 (시간대)</th><th>시주 (時柱)</th><th>天干 십성</th><th>地支 십성 (12운성)</th><th>핵심 에너지</th></tr></thead>
+      <tbody id="hour-body"></tbody>
     </table>
   </div>
 </section>
@@ -499,20 +517,46 @@ function ssColor(ss){
 }
 
 /* ═══════════════════════════════════════════════
-   UI 업데이트
+   UI 업데이트 및 시운(時運) 계산
 ═══════════════════════════════════════════════ */
+const HOUR_RANGES = [
+  '23:30~01:30', '01:30~03:30', '03:30~05:30', '05:30~07:30',
+  '07:30~09:30', '09:30~11:30', '11:30~13:30', '13:30~15:30',
+  '15:30~17:30', '17:30~19:30', '19:30~21:30', '21:30~23:30'
+];
+
+function getHourGZ(dayStem, hourBranchIdx) {
+  const dayStemIdx = ST.indexOf(dayStem);
+  const hourStemIdx = ((dayStemIdx % 5) * 2 + hourBranchIdx) % 10;
+  return {
+    stem: ST[hourStemIdx],
+    branch: BR[hourBranchIdx],
+    stemKr: STk[hourStemIdx],
+    branchKr: BRk[hourBranchIdx],
+    ss: SS_STEM[hourStemIdx],
+    ssBranch: SS_BRANCH[hourBranchIdx],
+    us: US_BRANCH[hourBranchIdx]
+  };
+}
+
 function render(){
-  const today = new Date();
-  const yGZ = getYearGZ(today.getFullYear());
-  const mGZ = getMonthGZ(today);
-  const dGZ = getDayGZ(today);
+  const realNow = new Date();
+  // 23:30 경계로 하루의 사주(일진)가 다음 날로 바뀌는 보정 적용
+  const sajuDate = new Date(realNow.getTime() + 30 * 60 * 1000);
+  
+  const yGZ = getYearGZ(sajuDate.getFullYear());
+  const mGZ = getMonthGZ(sajuDate);
+  const dGZ = getDayGZ(sajuDate);
+  
+  const hourBranchIdx = Math.floor(sajuDate.getHours() / 2);
+  const hGZ = getHourGZ(dGZ.stem, hourBranchIdx);
 
   // 헤더
-  document.getElementById('hdr-date').textContent = fmtDate(today);
+  document.getElementById('hdr-date').textContent = fmtDate(realNow);
   document.getElementById('hdr-gz').textContent = `${dGZ.stem}${dGZ.branch}日 (${dGZ.stemKr}${dGZ.branchKr}일)`;
 
   // 세운
-  document.getElementById('sw-lbl').textContent = `歲 運 (${today.getFullYear()}년)`;
+  document.getElementById('sw-lbl').textContent = `歲 運 (${sajuDate.getFullYear()}년)`;
   document.getElementById('sw-stem').textContent = yGZ.stem;
   document.getElementById('sw-branch').textContent = yGZ.branch;
   document.getElementById('sw-kr').textContent = yGZ.stemKr + yGZ.branchKr;
@@ -520,7 +564,7 @@ function render(){
   document.getElementById('sw-desc').textContent = FC_DESC[yGZ.ss] || '';
 
   // 월운
-  const mLabel = `月 運 (${today.getMonth()+1}월)`;
+  const mLabel = `月 運 (${sajuDate.getMonth()+1}월)`;
   document.getElementById('mw-lbl').textContent = mLabel;
   document.getElementById('mw-stem').textContent = mGZ.stem;
   document.getElementById('mw-branch').textContent = mGZ.branch;
@@ -534,6 +578,14 @@ function render(){
   document.getElementById('iw-kr').textContent = dGZ.stemKr + dGZ.branchKr;
   makeTags(dGZ.ss, dGZ.ssBranch, dGZ.us, document.getElementById('iw-tags'));
   document.getElementById('iw-desc').textContent = (US_BRIEF[dGZ.us] || '') + ' ' + FC_DESC[dGZ.ss];
+
+  // 시운
+  document.getElementById('hw-lbl').textContent = `時 運 (${BRk[hourBranchIdx]}時 · 실시간)`;
+  document.getElementById('hw-stem').textContent = hGZ.stem;
+  document.getElementById('hw-branch').textContent = hGZ.branch;
+  document.getElementById('hw-kr').textContent = hGZ.stemKr + hGZ.branchKr;
+  makeTags(hGZ.ss, hGZ.ssBranch, hGZ.us, document.getElementById('hw-tags'));
+  document.getElementById('hw-desc').textContent = `[${hGZ.us}] ${US_BRIEF[hGZ.us] || ''}. ${FC_DESC[hGZ.ss] || ''}`;
 
   // 일일 리포트
   const r = RPT[dGZ.ss] || RPT['비견'];
@@ -555,7 +607,7 @@ function render(){
   const tbody = document.getElementById('week-body');
   tbody.innerHTML = '';
   for (let i = 0; i < 7; i++){
-    const d = new Date(today); d.setDate(today.getDate() + i);
+    const d = new Date(sajuDate); d.setDate(sajuDate.getDate() + i);
     const gz = getDayGZ(d);
     const col = ssColor(gz.ss);
     const tr = document.createElement('tr');
@@ -569,12 +621,41 @@ function render(){
       <td class="d-brief">${US_BRIEF[gz.us]||gz.us}</td>`;
     tbody.appendChild(tr);
   }
+
+  // 12시진 미리보기
+  const hourTbody = document.getElementById('hour-body');
+  hourTbody.innerHTML = '';
+  for (let i = 0; i < 12; i++) {
+    const hGZ_i = getHourGZ(dGZ.stem, i);
+    const col = ssColor(hGZ_i.ss);
+    const tr = document.createElement('tr');
+    if (i === hourBranchIdx) tr.className = 'cur-hour';
+    tr.innerHTML = `
+      <td class="d-date">${BRk[i]}시 (${HOUR_RANGES[i]}) ${i===hourBranchIdx?'(현재)':''}</td>
+      <td class="d-gz"><span class="st">${hGZ_i.stem}</span><span class="br">${hGZ_i.branch}</span> <small style="color:var(--muted);font-size:.7rem">${hGZ_i.stemKr}${hGZ_i.branchKr}</small></td>
+      <td><span class="d-ss" style="color:${col};border:1px solid ${col}44;background:${col}15">${hGZ_i.ss}</span></td>
+      <td class="d-us">${hGZ_i.ssBranch} (${hGZ_i.us})</td>
+      <td class="d-brief">${US_BRIEF[hGZ_i.us] || hGZ_i.us}</td>
+    `;
+    hourTbody.appendChild(tr);
+  }
 }
 
+let lastHourBranchIdx = -1;
 function updateTime(){
   const now = new Date();
   document.getElementById('hdr-time').textContent =
     `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} 현재`;
+  
+  // 30분 단위 보정을 반영하여 시진 인덱스 계산
+  const sajuDate = new Date(now.getTime() + 30 * 60 * 1000);
+  const currentBranchIdx = Math.floor(sajuDate.getHours() / 2);
+  
+  // 시진이 바뀌면 리포트 재렌더링
+  if (currentBranchIdx !== lastHourBranchIdx) {
+    lastHourBranchIdx = currentBranchIdx;
+    render();
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -593,15 +674,8 @@ function updateTime(){
 /* ═══════════════════════════════════════════════
    초기화 및 타이머
 ═══════════════════════════════════════════════ */
-render();
 updateTime();
 setInterval(updateTime, 1000);
-// 자정에 리포트 갱신
-(function scheduleRefresh(){
-  const now = new Date();
-  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
-  setTimeout(()=>{ render(); scheduleRefresh(); }, next-now);
-})();
 </script>
 </body>
 </html>
