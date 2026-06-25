@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사주 일일 리포트 — 박승복</title>
+<meta name="description" content="만세력 천을귀인 기반 박승복 사주 일일 운세 리포트">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060c18;--card:rgba(255,255,255,.045);--border:rgba(255,255,255,.09);--gold:#c9a84c;--gold2:#e8c96a;--teal:#38b2ac;--teal2:#4ecdc4;--txt:#f0ebe0;--txt2:#a8a29e;--muted:#6b7280}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans KR',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,rgba(56,178,172,.09) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(201,168,76,.07) 0%,transparent 50%);pointer-events:none;z-index:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px;position:relative;z-index:1}
+
+/* STARS */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.s{position:absolute;background:#fff;border-radius:50%;animation:tw linear infinite}
+@keyframes tw{0%,100%{opacity:0}50%{opacity:.6}}
+
+/* HEADER */
+header{padding:36px 0 26px;border-bottom:1px solid var(--border);margin-bottom:36px}
+.hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.hdr-l h1{font-family:'Noto Serif KR',serif;font-size:1.7rem;color:var(--gold);letter-spacing:.05em;margin-bottom:5px}
+.hdr-l .sub{font-size:.8rem;color:var(--txt2);letter-spacing:.1em}
+.hdr-r{text-align:right}
+#hdr-date{font-family:'Noto Serif KR',serif;font-size:1.35rem;margin-bottom:3px}
+#hdr-gz{font-size:1.05rem;color:var(--gold);letter-spacing:.1em}
+#hdr-time{font-size:.75rem;color:var(--muted);margin-top:3px}
+
+/* SECTION TITLE */
+.sec-title{font-family:'Noto Serif KR',serif;font-size:1.0rem;color:var(--gold);letter-spacing:.15em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(201,168,76,.35),transparent)}
+
+/* SAJU BOARD */
+.board{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:36px;backdrop-filter:blur(8px)}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.pillar{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:18px 12px;text-align:center;transition:.3s}
+.pillar:hover{border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.05)}
+.pillar.me{border-color:rgba(201,168,76,.45);background:rgba(201,168,76,.09)}
+.p-lbl{font-size:.7rem;color:var(--muted);letter-spacing:.18em;margin-bottom:10px}
+.p-ss{font-size:.75rem;color:var(--teal2);margin-bottom:6px}
+.p-stem{font-family:'Noto Serif KR',serif;font-size:2.1rem;line-height:1;color:var(--gold2)}
+.pillar.me .p-stem{color:var(--gold)}
+.p-branch{font-family:'Noto Serif KR',serif;font-size:2.1rem;line-height:1;color:var(--txt);margin-bottom:6px}
+.p-us{font-size:.72rem;color:var(--muted)}
+.ohaeng{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.oh{display:flex;align-items:center;gap:5px;font-size:.8rem;color:var(--txt2)}
+.oh-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.oh-note{margin-left:auto;font-size:.75rem;color:var(--muted)}
+
+/* FORTUNE LAYERS */
+.layers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
+.fc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 18px;backdrop-filter:blur(8px);transition:.3s;position:relative;overflow:hidden}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:16px 16px 0 0}
+.fc.dw::before{background:linear-gradient(90deg,#8b5cf6,#7c3aed)}
+.fc.sw::before{background:linear-gradient(90deg,#c9a84c,#e8c96a)}
+.fc.mw::before{background:linear-gradient(90deg,#38b2ac,#4ecdc4)}
+.fc.iw::before{background:linear-gradient(90deg,#ef4444,#f87171)}
+.fc:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.fc-lbl{font-size:.68rem;letter-spacing:.2em;margin-bottom:14px}
+.fc.dw .fc-lbl{color:#8b5cf6}.fc.sw .fc-lbl{color:var(--gold)}.fc.mw .fc-lbl{color:var(--teal2)}.fc.iw .fc-lbl{color:#ef4444}
+.fc-gz{display:flex;align-items:flex-end;gap:4px;margin-bottom:14px}
+.fc-stem{font-family:'Noto Serif KR',serif;font-size:2.6rem;line-height:1;color:var(--gold2)}
+.fc-branch{font-family:'Noto Serif KR',serif;font-size:2.6rem;line-height:1;color:var(--txt)}
+.fc-kr{font-size:.8rem;color:var(--muted);padding-bottom:4px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.tag{font-size:.72rem;padding:3px 9px;border-radius:20px;border:1px solid}
+.tag-s{color:var(--teal2);border-color:rgba(78,205,196,.3);background:rgba(78,205,196,.08)}
+.tag-u{color:var(--gold);border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.08)}
+.fc-desc{font-size:.78rem;color:var(--txt2);line-height:1.6}
+
+/* DAILY REPORT */
+.report{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:36px;backdrop-filter:blur(8px)}
+.rpt-hdr{display:flex;align-items:center;gap:14px;margin-bottom:26px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.rpt-badge{width:68px;height:68px;background:linear-gradient(135deg,rgba(201,168,76,.22),rgba(201,168,76,.05));border:1px solid rgba(201,168,76,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-size:1.5rem;color:var(--gold);flex-shrink:0}
+.rpt-hdr-txt h2{font-family:'Noto Serif KR',serif;font-size:1.2rem;margin-bottom:4px}
+.rpt-energy{font-size:.82rem;color:var(--teal2)}
+.main-msg{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(56,178,172,.05));border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:18px 22px;margin-bottom:20px}
+.main-msg p{font-family:'Noto Serif KR',serif;font-size:.97rem;color:var(--gold2);line-height:1.95;text-align:center}
+.rpt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:18px}
+.rpt-sec{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:18px}
+.rpt-sec h3{font-size:.78rem;color:var(--gold);letter-spacing:.15em;margin-bottom:10px}
+.rpt-sec p{font-size:.84rem;color:var(--txt2);line-height:1.8}
+.kw-row{display:flex;gap:8px;flex-wrap:wrap}
+.kw{font-size:.76rem;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--txt2)}
+.kw.g{border-color:rgba(16,185,129,.35);color:#10b981;background:rgba(16,185,129,.08)}
+.kw.c{border-color:rgba(245,158,11,.35);color:#f59e0b;background:rgba(245,158,11,.08)}
+
+/* WEEK TABLE */
+.week-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:36px;overflow-x:auto;backdrop-filter:blur(8px)}
+table{width:100%;border-collapse:collapse;min-width:580px}
+thead th{font-size:.72rem;color:var(--muted);letter-spacing:.15em;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-weight:500}
+tbody td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem;vertical-align:middle}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+tbody tr.today td{background:rgba(201,168,76,.08)}
+.d-date{color:var(--txt2)}.today .d-date{color:var(--gold);font-weight:600}
+.d-gz{font-family:'Noto Serif KR',serif;font-size:1.05rem}
+.d-gz .st{color:var(--gold2)}.d-gz .br{color:var(--txt)}
+.d-ss{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:10px}
+.d-us{font-size:.75rem;color:var(--muted)}
+.d-brief{font-size:.76rem;color:var(--txt2)}
+
+/* FOOTER */
+footer{text-align:center;padding:26px 0;border-top:1px solid var(--border);font-size:.76rem;color:var(--muted);line-height:1.9}
+
+/* ANIM */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.au{animation:fadeUp .55s ease both}
+.au:nth-child(1){animation-delay:.05s}.au:nth-child(2){animation-delay:.12s}.au:nth-child(3){animation-delay:.19s}.au:nth-child(4){animation-delay:.26s}
+
+@media(max-width:860px){.layers,.pillars{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.layers{grid-template-columns:1fr}.rpt-grid{grid-template-columns:1fr}.pillars{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <div class="hdr-l">
+      <h1>🔮 사주명리 일일 리포트</h1>
+      <div class="sub">만세력 천을귀인 · 박승복 님 · 일간 癸水(계수) · 辛未大運</div>
+    </div>
+    <div class="hdr-r">
+      <div id="hdr-date">--</div>
+      <div id="hdr-gz">-- 日</div>
+      <div id="hdr-time">--:--:--</div>
+    </div>
+  </div>
+</header>
+
+<!-- 원국 -->
+<section>
+  <div class="sec-title">📋 사주 원국 — 甲子年 丙寅月 癸巳日 丙辰時</div>
+  <div class="board">
+    <div class="pillars">
+      <div class="pillar">
+        <div class="p-lbl">時 柱</div>
+        <div class="p-ss">정재</div>
+        <div class="p-stem">丙</div>
+        <div class="p-branch">辰</div>
+        <div class="p-ss">정관</div>
+        <div class="p-us">養 (양)</div>
+      </div>
+      <div class="pillar me">
+        <div class="p-lbl">日 柱 ⟨나⟩</div>
+        <div class="p-ss" style="color:var(--gold)">일 간</div>
+        <div class="p-stem">癸</div>
+        <div class="p-branch">巳</div>
+        <div class="p-ss">정재</div>
+        <div class="p-us">胎 (태)</div>
+      </div>
+      <div class="pillar">
+        <div class="p-lbl">月 柱</div>
+        <div class="p-ss">정재</div>
+        <div class="p-stem">丙</div>
+        <div class="p-branch">寅</div>
+        <div class="p-ss">상관</div>
+        <div class="p-us">沐浴 (목욕)</div>
+      </div>
+      <div class="pillar">
+        <div class="p-lbl">年 柱</div>
+        <div class="p-ss">상관</div>
+        <div class="p-stem">甲</div>
+        <div class="p-branch">子</div>
+        <div class="p-ss">비견</div>
+        <div class="p-us">建祿 (건록)</div>
+      </div>
+    </div>
+    <div class="ohaeng">
+      <div class="oh"><div class="oh-dot" style="background:#4caf50"></div>木 2</div>
+      <div class="oh"><div class="oh-dot" style="background:#ef5350"></div>火 3 ⚠️</div>
+      <div class="oh"><div class="oh-dot" style="background:#ff9800"></div>土 1</div>
+      <div class="oh"><div class="oh-dot" style="background:#9e9e9e"></div>金 0 ❌</div>
+      <div class="oh"><div class="oh-dot" style="background:#42a5f5"></div>水 2</div>
+      <div class="oh-note">핵심 구조 : 상관생재(傷官生財) | 만발형(晩發型)</div>
+    </div>
+  </div>
+</section>
+
+<!-- 운세 레이어 -->
+<section>
+  <div class="sec-title">🌊 운세 흐름 — 대운 · 세운 · 월운 · 일운</div>
+  <div class="layers">
+    <!-- 대운 고정 -->
+    <div class="fc dw au">
+      <div class="fc-lbl">大 運 (42~51세)</div>
+      <div class="fc-gz"><span class="fc-stem">辛</span><span class="fc-branch">未</span><span class="fc-kr">신미</span></div>
+      <div class="tags"><span class="tag tag-s">편인</span><span class="tag tag-s">편관</span><span class="tag tag-u">墓 묘</span></div>
+      <div class="fc-desc">원국 金 부재를 채우는 전환 대운. 내면 충전과 외부 압박이 공존하는 단련기.</div>
+    </div>
+    <!-- 세운 동적 -->
+    <div class="fc sw au">
+      <div class="fc-lbl" id="sw-lbl">歲 運</div>
+      <div class="fc-gz"><span class="fc-stem" id="sw-stem">-</span><span class="fc-branch" id="sw-branch">-</span><span class="fc-kr" id="sw-kr"></span></div>
+      <div class="tags" id="sw-tags"></div>
+      <div class="fc-desc" id="sw-desc"></div>
+    </div>
+    <!-- 월운 동적 -->
+    <div class="fc mw au">
+      <div class="fc-lbl" id="mw-lbl">月 運</div>
+      <div class="fc-gz"><span class="fc-stem" id="mw-stem">-</span><span class="fc-branch" id="mw-branch">-</span><span class="fc-kr" id="mw-kr"></span></div>
+      <div class="tags" id="mw-tags"></div>
+      <div class="fc-desc" id="mw-desc"></div>
+    </div>
+    <!-- 일운 동적 -->
+    <div class="fc iw au">
+      <div class="fc-lbl">日 運 (오늘)</div>
+      <div class="fc-gz"><span class="fc-stem" id="iw-stem">-</span><span class="fc-branch" id="iw-branch">-</span><span class="fc-kr" id="iw-kr"></span></div>
+      <div class="tags" id="iw-tags"></div>
+      <div class="fc-desc" id="iw-desc"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 일일 리포트 -->
+<section>
+  <div class="sec-title">📜 오늘의 일일 리포트</div>
+  <div class="report">
+    <div class="rpt-hdr">
+      <div class="rpt-badge" id="rpt-badge">-</div>
+      <div class="rpt-hdr-txt">
+        <h2 id="rpt-title">--</h2>
+        <div class="rpt-energy" id="rpt-energy">--</div>
+      </div>
+    </div>
+    <div class="main-msg"><p id="rpt-main">--</p></div>
+    <div class="rpt-grid">
+      <div class="rpt-sec"><h3>💼 직업 · 재물</h3><p id="rpt-work">--</p></div>
+      <div class="rpt-sec"><h3>👥 대인관계</h3><p id="rpt-rel">--</p></div>
+      <div class="rpt-sec"><h3>🏥 건강 · 에너지</h3><p id="rpt-health">--</p></div>
+      <div class="rpt-sec"><h3>🎯 오늘의 핵심 조언</h3><p id="rpt-advice">--</p></div>
+    </div>
+    <div class="kw-row" id="kw-row"></div>
+  </div>
+</section>
+
+<!-- 7일 미리보기 -->
+<section>
+  <div class="sec-title">📅 향후 7일 일운 미리보기</div>
+  <div class="week-wrap">
+    <table>
+      <thead><tr><th>날짜</th><th>요일</th><th>일주 (日柱)</th><th>天干 십성</th><th>地支 12운성</th><th>오늘의 한마디</th></tr></thead>
+      <tbody id="week-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  🔮 만세력 천을귀인 데이터 기반 | 일간 癸水(계수) · 辛未大運(42~51세) · 상관생재 구조<br>
+  사주는 타고난 기질과 에너지의 지도입니다. 최종적인 삶의 방향은 언제나 본인의 선택과 의지에 달려 있습니다.
+</footer>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   상수
+═══════════════════════════════════════════════ */
+const ST = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const BR = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const STk = ['갑','을','병','정','무','기','경','신','임','계'];
+const BRk = ['자','축','인','묘','진','사','오','미','신','유','술','해'];
+const WD = ['일','월','화','수','목','금','토'];
+
+// 癸水 기준 天干 십성 (甲=0 부터)
+const SS_STEM = ['상관','식신','정재','편재','정관','편관','정인','편인','겁재','비견'];
+
+// 癸水 기준 地支 12운성 (子=0 부터)
+const US_BRANCH = ['건록','관대','목욕','장생','양','태','절','묘','사','병','쇠','제왕'];
+
+// 癸水 기준 地支 십성 - 지장간 본기 기준 (子=0 부터)
+// 子(癸)→비견, 丑(己)→편관, 寅(甲)→상관, 卯(乙)→식신, 辰(戊)→정관, 巳(丙)→정재
+// 午(丁)→편재, 未(己)→편관, 申(庚)→정인, 酉(辛)→편인, 戌(戊)→정관, 亥(壬)→겁재
+const SS_BRANCH = ['비견','편관','상관','식신','정관','정재','편재','편관','정인','편인','정관','겁재'];
+
+// 기준일: 1984년 2월 29일 = 癸巳日 = GZ 인덱스 29
+const REF = new Date(1984,1,29);
+const REF_GZ = 29;
+
+/* ═══════════════════════════════════════════════
+   月運 절기 전환 데이터 (2024~2027)
+   각 절기 시작일에 해당 월주로 전환
+═══════════════════════════════════════════════ */
+const MTH = [
+  // 2024 甲辰年 (丙寅월부터 시작)
+  {d:new Date(2024,0,6), s:'乙',b:'丑'},  // 소한
+  {d:new Date(2024,1,4), s:'丙',b:'寅'},  // 입춘 甲辰년 시작
+  {d:new Date(2024,2,5), s:'丁',b:'卯'},  // 경칩
+  {d:new Date(2024,3,4), s:'戊',b:'辰'},  // 청명
+  {d:new Date(2024,4,5), s:'己',b:'巳'},  // 입하
+  {d:new Date(2024,5,5), s:'庚',b:'午'},  // 망종
+  {d:new Date(2024,6,6), s:'辛',b:'未'},  // 소서
+  {d:new Date(2024,7,7), s:'壬',b:'申'},  // 입추
+  {d:new Date(2024,8,7), s:'癸',b:'酉'},  // 백로
+  {d:new Date(2024,9,8), s:'甲',b:'戌'},  // 한로
+  {d:new Date(2024,10,7),s:'乙',b:'亥'},  // 입동
+  {d:new Date(2024,11,7),s:'丙',b:'子'},  // 대설
+  // 2025 乙巳年 (戊寅월부터 시작)
+  {d:new Date(2025,0,5), s:'丁',b:'丑'},  // 소한
+  {d:new Date(2025,1,3), s:'戊',b:'寅'},  // 입춘 乙巳년 시작
+  {d:new Date(2025,2,6), s:'己',b:'卯'},
+  {d:new Date(2025,3,5), s:'庚',b:'辰'},
+  {d:new Date(2025,4,5), s:'辛',b:'巳'},
+  {d:new Date(2025,5,6), s:'壬',b:'午'},
+  {d:new Date(2025,6,7), s:'癸',b:'未'},
+  {d:new Date(2025,7,7), s:'甲',b:'申'},
+  {d:new Date(2025,8,7), s:'乙',b:'酉'},
+  {d:new Date(2025,9,8), s:'丙',b:'戌'},
+  {d:new Date(2025,10,7),s:'丁',b:'亥'},
+  {d:new Date(2025,11,7),s:'戊',b:'子'},
+  // 2026 丙午年 (庚寅월부터 시작)
+  {d:new Date(2026,0,5), s:'己',b:'丑'},  // 소한
+  {d:new Date(2026,1,4), s:'庚',b:'寅'},  // 입춘 丙午년 시작
+  {d:new Date(2026,2,6), s:'辛',b:'卯'},
+  {d:new Date(2026,3,4), s:'壬',b:'辰'},
+  {d:new Date(2026,4,5), s:'癸',b:'巳'},
+  {d:new Date(2026,5,6), s:'甲',b:'午'},  // 망종
+  {d:new Date(2026,6,7), s:'乙',b:'未'},  // 소서 ← 7월
+  {d:new Date(2026,7,7), s:'丙',b:'申'},
+  {d:new Date(2026,8,8), s:'丁',b:'酉'},
+  {d:new Date(2026,9,8), s:'戊',b:'戌'},
+  {d:new Date(2026,10,7),s:'己',b:'亥'},
+  {d:new Date(2026,11,7),s:'庚',b:'子'},
+  // 2027 丁未年 (壬寅월부터 시작)
+  {d:new Date(2027,0,5), s:'辛',b:'丑'},
+  {d:new Date(2027,1,3), s:'壬',b:'寅'},  // 입춘 丁未년 시작
+  {d:new Date(2027,2,5), s:'癸',b:'卯'},
+  {d:new Date(2027,3,5), s:'甲',b:'辰'},
+  {d:new Date(2027,4,6), s:'乙',b:'巳'},
+  {d:new Date(2027,5,6), s:'丙',b:'午'},
+  {d:new Date(2027,6,7), s:'丁',b:'未'},
+  {d:new Date(2027,7,7), s:'戊',b:'申'},
+  {d:new Date(2027,8,7), s:'己',b:'酉'},
+  {d:new Date(2027,9,8), s:'庚',b:'戌'},
+  {d:new Date(2027,10,7),s:'辛',b:'亥'},
+  {d:new Date(2027,11,7),s:'壬',b:'子'},
+];
+
+/* ═══════════════════════════════════════════════
+   십성별 리포트 데이터
+═══════════════════════════════════════════════ */
+const RPT = {
+  '비견':{col:'#6366f1',title:'비견일 (比肩) — 독립과 자기신뢰',energy:'주체적 자아 에너지의 날',
+    main:'나와 동일한 기운이 흐르는 날입니다. 독립심과 자기 주도력이 강해지며, 동료와 함께하면 시너지가 납니다.',
+    work:'자신의 방식대로 주체적으로 업무를 처리하기 좋은 날입니다. 독립 작업이나 기획에 집중하세요.',
+    rel:'친구·동료와의 교류에서 즐거움을 찾을 수 있습니다. 비슷한 관심사를 가진 사람과의 만남이 활력을 줍니다.',
+    health:'에너지가 균형 잡힌 날입니다. 자신을 위한 시간을 충분히 확보하고 규칙적인 생활을 유지하세요.',
+    advice:'남의 시선보다 자신의 기준을 믿으세요. 단, 고집이 강해질 수 있으니 열린 자세도 함께 유지하세요.',
+    kw:['자기주도','독립','동료교류'],cw:['고집','독선']},
+  '겁재':{col:'#8b5cf6',title:'겁재일 (劫財) — 경쟁과 도전',energy:'강한 경쟁 에너지의 날',
+    main:'강렬한 경쟁 에너지가 유입되는 날입니다. 용기와 결단력이 강해지지만 재물 관련 분쟁에 주의가 필요합니다.',
+    work:'어려운 도전에 과감히 맞설 수 있는 날. 실력으로 승부하면 좋은 결과를 낼 수 있습니다.',
+    rel:'경쟁 관계에 있는 사람과의 접촉이 늘 수 있습니다. 유연하게 대처하고 불필요한 대립은 피하세요.',
+    health:'활동적인 에너지가 강합니다. 적절한 운동으로 과도한 에너지를 발산하세요.',
+    advice:'충동적 재물 지출이나 투기성 투자는 오늘 반드시 피하세요. 경쟁은 하되 정도를 지키세요.',
+    kw:['경쟁','도전','용기'],cw:['재물손실','충동']},
+  '식신':{col:'#10b981',title:'식신일 (食神) — 창의와 여유',energy:'재능과 표현이 자연스럽게 흐르는 날',
+    main:'나의 재능과 창의성이 자연스럽게 흘러나오는 날입니다. 새로운 아이디어를 내고 표현하는 데 최적입니다.',
+    work:'창의적 기획, 콘텐츠 창작, 브레인스토밍에 최고의 날입니다. 새로운 아이디어를 마음껏 펼치세요.',
+    rel:'편안하고 유연한 만남이 많아집니다. 좋은 식사 자리에서 의미 있는 관계가 형성됩니다.',
+    health:'소화기 관련 컨디션이 좋은 날. 좋아하는 음식을 여유롭게 즐기세요.',
+    advice:'오늘 떠오른 아이디어는 반드시 메모해두세요. 창의적 영감이 미래의 재물로 이어집니다.',
+    kw:['창의','표현','아이디어','식복'],cw:['게으름','마감지연']},
+  '상관':{col:'#06b6d4',title:'상관일 (傷官) — 표현과 혁신',energy:'기존 틀을 깨는 혁신 에너지의 날',
+    main:'독창적인 아이디어와 탁월한 언변이 빛을 발하는 날입니다. 단, 권위에 대한 저항감도 강해지니 유의하세요.',
+    work:'프레젠테이션·협상·창작에서 탁월한 성과를 낼 수 있습니다. 기존 방식을 혁신하는 아이디어가 인정받는 날.',
+    rel:'언변과 표현력이 최고조에 달합니다. 설득력 있는 대화로 상대를 움직일 수 있지만 말의 날을 조절하세요.',
+    health:'에너지가 넘치지만 과도한 말과 활동으로 체력이 소모될 수 있습니다. 중간 휴식을 챙기세요.',
+    advice:'재능을 발휘하되, 상사·선배·기관과의 불필요한 마찰은 오늘만큼은 피하세요.',
+    kw:['창의력','언변','혁신'],cw:['권위마찰','말조심']},
+  '정재':{col:'#f59e0b',title:'정재일 (正財) — 성실과 결실',energy:'안정적 재물 에너지가 흐르는 날',
+    main:'노력한 만큼 정당한 보상이 돌아오는 날입니다. 계획적이고 성실한 재물 활동에 가장 유리한 날입니다.',
+    work:'계약·거래·수금·보고서 제출 등 실질적 성과를 만드는 업무에 적합합니다. 오늘 마무리한 일은 정당한 결과를 가져옵니다.',
+    rel:'신뢰를 바탕으로 한 실질적인 관계가 형성되는 날. 비즈니스 파트너와의 만남이 좋은 결과를 낳습니다.',
+    health:'안정적인 컨디션입니다. 규칙적 생활을 유지하고, 재물 걱정이 스트레스로 이어지지 않도록 주의하세요.',
+    advice:'정직하고 성실한 방식으로 재물 활동을 처리하세요. 투기보다는 안정을 선택하세요.',
+    kw:['재물','성실','계획','결실'],cw:['과도한절약','재물집착']},
+  '편재':{col:'#f97316',title:'편재일 (偏財) — 사교와 기회',energy:'예상치 못한 기회가 열리는 날',
+    main:'의외의 재물 기회나 새로운 만남이 찾아올 수 있는 날입니다. 사교 활동에서 뜻밖의 정보나 기회를 얻을 수 있습니다.',
+    work:'새로운 사업 기회나 프로젝트 제안이 들어올 수 있습니다. 네트워킹이나 외부 미팅에 집중하면 좋습니다.',
+    rel:'폭넓은 사교 활동이 활발해집니다. 새로운 사람들과의 만남에서 기회의 씨앗을 발견하세요.',
+    health:'활동적이고 이동이 많아지는 날. 과도한 음주나 외식이 건강에 영향을 줄 수 있으니 적당히 즐기세요.',
+    advice:'오늘 들어오는 정보와 기회를 잘 메모해두세요. 단, 충동적 투자나 큰 결정은 하루 이틀 더 고민하세요.',
+    kw:['기회','사교','네트워킹'],cw:['충동지출','과음']},
+  '정관':{col:'#3b82f6',title:'정관일 (正官) — 책임과 신뢰',energy:'사회적 질서와 신뢰의 날',
+    main:'사회적 책임감과 신뢰가 강조되는 날입니다. 공식적인 자리에서 자신의 역량을 인정받을 수 있습니다.',
+    work:'공식 회의·보고·평가·발표에서 좋은 인상을 남기기 좋습니다. 규칙과 원칙을 지키는 것이 신뢰를 높입니다.',
+    rel:'사회적으로 인정받는 분, 또는 직업적으로 존경받는 분과의 만남이 도움이 됩니다.',
+    health:'무리하지 않는 안정적인 하루입니다. 정신적 스트레스가 있더라도 루틴을 유지하면 건강을 지킬 수 있습니다.',
+    advice:'공식적 약속과 의무를 충실히 이행하세요. 오늘 지킨 원칙이 내일의 신뢰와 명예가 됩니다.',
+    kw:['책임','신뢰','공식활동'],cw:['경직','지나친원칙']},
+  '편관':{col:'#ef4444',title:'편관일 (偏官) — 압박과 극복',energy:'도전과 단련의 기운이 강한 날',
+    main:'외부로부터 압박과 도전이 가해지는 날입니다. 강한 의지와 침착함으로 맞선다면 오히려 성장의 기회가 됩니다.',
+    work:'어려운 과제나 예상치 못한 문제가 생길 수 있습니다. 당황하지 말고 차분히 해결책을 찾으면 역량을 인정받습니다.',
+    rel:'갈등이나 마찰이 발생하기 쉬운 날입니다. 불필요한 논쟁을 피하고 작은 도발에 반응하지 마세요.',
+    health:'스트레스가 신체에 영향을 줄 수 있는 날입니다. 심호흡·산책·명상으로 긴장을 풀어주세요.',
+    advice:'오늘은 큰 도발에 침묵으로 대응하는 것이 지혜입니다. 감정적 반응보다 전략적 판단을 하세요.',
+    kw:['극복','인내','전략'],cw:['감정적반응','갈등','건강소모']},
+  '정인':{col:'#8b5cf6',title:'정인일 (正印) — 학습과 보호',energy:'지혜와 보호 에너지의 날',
+    main:'나를 지지하고 성장시키는 따뜻한 에너지가 들어오는 날입니다. 학습과 계획 수립, 문서 작업에 최적입니다.',
+    work:'학습·연구·자격증 준비·계획수립·중요 문서 정리에 가장 좋은 날입니다. 오늘 습득한 지식은 오래 기억됩니다.',
+    rel:'스승·선배·부모님 등 나를 아끼고 지지해주는 분과의 만남이 도움이 됩니다.',
+    health:'보호받는 느낌의 편안한 날입니다. 충분한 수면과 영양이 중요합니다.',
+    advice:'오늘 공부하거나 계획한 것은 반드시 기록으로 남기세요. 오늘의 지식 투자가 미래의 가장 확실한 자산입니다.',
+    kw:['학습','문서','계획수립'],cw:['의존성','결단지연']},
+  '편인':{col:'#6366f1',title:'편인일 (偏印) — 직관과 통찰',energy:'이면을 보는 통찰력의 날',
+    main:'남들이 보지 못하는 이면을 꿰뚫는 특별한 직관력이 강화되는 날입니다. 독창적 기획과 연구 활동에 탁월합니다.',
+    work:'깊이 있는 연구·전략 수립·독창적 기획에 집중하면 남다른 결과를 낼 수 있습니다. 혼자 하는 집중 작업에 적합합니다.',
+    rel:'내향적 기운이 강해지는 날. 넓은 사교보다 깊이 있는 1:1 대화가 더 의미 있습니다.',
+    health:'정신적 에너지를 많이 쓰는 날. 과도한 사색은 피로를 유발하니 적당한 신체 활동으로 균형을 잡으세요.',
+    advice:'오늘의 직관적 감각을 믿으세요. 단, 고립되지 않도록 신뢰하는 사람과 대화 시간을 가지세요.',
+    kw:['직관','통찰','연구'],cw:['고립','과사색']},
+};
+
+// 12운성 한마디
+const US_BRIEF = {
+  '장생':'새로운 시작의 에너지 🌱',
+  '목욕':'감성이 예민하고 새로운 인상의 날 💧',
+  '관대':'당당함과 자신감이 높아지는 날 👑',
+  '건록':'실력을 안정적으로 발휘하는 날 ⚡',
+  '제왕':'모든 능력이 절정에 이르는 날 🔥',
+  '쇠':  '여유를 갖고 신중하게 행동하는 날 🌙',
+  '병':  '에너지가 낮아지는 날, 무리는 금물 🌫️',
+  '사':  '내면 성찰과 정리에 집중하는 날 🪐',
+  '묘':  '정리와 준비의 창고 에너지 📦',
+  '절':  '변화와 전환의 결단이 필요한 날 ⚡',
+  '태':  '씨앗이 잉태되는 잠재력 충전의 날 🌙',
+  '양':  '회복과 자기 돌봄의 날 ☁️',
+};
+
+// 세운/월운 십성별 짧은 설명
+const FC_DESC = {
+  '비견':'독립적 에너지와 경쟁심이 활성화되는 시기.',
+  '겁재':'경쟁과 재물 관련 변동이 생기기 쉬운 시기. 재물 관리에 신중하세요.',
+  '식신':'창의적 재능이 자연스럽게 수익으로 이어지는 흐름. 아이디어 활동에 유리합니다.',
+  '상관':'표현력과 혁신의 기운이 강한 시기. 권위와의 마찰 주의, 재능 발휘에 집중하세요.',
+  '정재':'성실한 노력이 정당한 재물로 이어지는 시기. 안정적 수익 경로에 집중하세요.',
+  '편재':'뜻밖의 기회와 사교 활동이 활발한 시기. 충동 투자는 주의하세요.',
+  '정관':'사회적 책임과 신뢰가 강조되는 시기. 공식 활동과 명예에 유리합니다.',
+  '편관':'외부 압박과 도전이 가해지는 시기. 강한 의지로 극복하면 성장의 기회가 됩니다.',
+  '정인':'학습과 문서, 내면 충전에 유리한 시기. 지식 투자가 미래 자산이 됩니다.',
+  '편인':'직관과 통찰, 연구·기획 활동에 탁월한 시기. 내면을 깊이 들여다보는 기회입니다.',
+};
+
+/* ═══════════════════════════════════════════════
+   계산 함수
+═══════════════════════════════════════════════ */
+function dateDiff(a, b) {
+  const ua = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const ub = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((ub - ua) / 86400000);
+}
+
+function getDayGZ(date) {
+  const diff = dateDiff(REF, date);
+  const idx = ((REF_GZ + diff) % 60 + 60) % 60;
+  const si = idx % 10, bi = idx % 12;
+  return { stem:ST[si], branch:BR[bi], stemKr:STk[si], branchKr:BRk[bi],
+           ss:SS_STEM[si], ssBranch:SS_BRANCH[bi], us:US_BRANCH[bi] };
+}
+
+function getYearGZ(y) {
+  const si = ((y-4)%10+10)%10, bi = ((y-4)%12+12)%12;
+  return { stem:ST[si], branch:BR[bi], stemKr:STk[si], branchKr:BRk[bi],
+           ss:SS_STEM[si], ssBranch:SS_BRANCH[bi], us:US_BRANCH[bi] };
+}
+
+function getMonthGZ(date) {
+  let cur = MTH[0];
+  for (const m of MTH) { if (date >= m.d) cur = m; else break; }
+  const si = ST.indexOf(cur.s), bi = BR.indexOf(cur.b);
+  return { stem:cur.s, branch:cur.b, stemKr:STk[si], branchKr:BRk[bi],
+           ss:SS_STEM[si], ssBranch:SS_BRANCH[bi], us:US_BRANCH[bi] };
+}
+
+/* ═══════════════════════════════════════════════
+   포맷 헬퍼
+═══════════════════════════════════════════════ */
+function pad(n){ return String(n).padStart(2,'0'); }
+function fmtDate(d){ return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${WD[d.getDay()]})`; }
+
+function tagHTML(ss, us){
+  return `<span class="tag tag-s">${ss}</span><span class="tag tag-s">${us.split('/')[1]||us}</span><span class="tag tag-u">${us}</span>`;
+}
+
+function makeTags(ss, ssBranch, us, el){
+  el.innerHTML = `<span class="tag tag-s">${ss}</span><span class="tag tag-s">${ssBranch}</span><span class="tag tag-u">${us}</span>`;
+}
+
+// 십성에 따른 배경색 클래스
+function ssColor(ss){
+  const m = {'비견':'#6366f1','겁재':'#8b5cf6','식신':'#10b981','상관':'#06b6d4',
+             '정재':'#f59e0b','편재':'#f97316','정관':'#3b82f6','편관':'#ef4444',
+             '정인':'#8b5cf6','편인':'#6366f1'};
+  return m[ss] || '#6b7280';
+}
+
+/* ═══════════════════════════════════════════════
+   UI 업데이트
+═══════════════════════════════════════════════ */
+function render(){
+  const today = new Date();
+  const yGZ = getYearGZ(today.getFullYear());
+  const mGZ = getMonthGZ(today);
+  const dGZ = getDayGZ(today);
+
+  // 헤더
+  document.getElementById('hdr-date').textContent = fmtDate(today);
+  document.getElementById('hdr-gz').textContent = `${dGZ.stem}${dGZ.branch}日 (${dGZ.stemKr}${dGZ.branchKr}일)`;
+
+  // 세운
+  document.getElementById('sw-lbl').textContent = `歲 運 (${today.getFullYear()}년)`;
+  document.getElementById('sw-stem').textContent = yGZ.stem;
+  document.getElementById('sw-branch').textContent = yGZ.branch;
+  document.getElementById('sw-kr').textContent = yGZ.stemKr + yGZ.branchKr;
+  makeTags(yGZ.ss, yGZ.ssBranch, yGZ.us, document.getElementById('sw-tags'));
+  document.getElementById('sw-desc').textContent = FC_DESC[yGZ.ss] || '';
+
+  // 월운
+  const mLabel = `月 運 (${today.getMonth()+1}월)`;
+  document.getElementById('mw-lbl').textContent = mLabel;
+  document.getElementById('mw-stem').textContent = mGZ.stem;
+  document.getElementById('mw-branch').textContent = mGZ.branch;
+  document.getElementById('mw-kr').textContent = mGZ.stemKr + mGZ.branchKr;
+  makeTags(mGZ.ss, mGZ.ssBranch, mGZ.us, document.getElementById('mw-tags'));
+  document.getElementById('mw-desc').textContent = FC_DESC[mGZ.ss] || '';
+
+  // 일운
+  document.getElementById('iw-stem').textContent = dGZ.stem;
+  document.getElementById('iw-branch').textContent = dGZ.branch;
+  document.getElementById('iw-kr').textContent = dGZ.stemKr + dGZ.branchKr;
+  makeTags(dGZ.ss, dGZ.ssBranch, dGZ.us, document.getElementById('iw-tags'));
+  document.getElementById('iw-desc').textContent = (US_BRIEF[dGZ.us] || '') + ' ' + FC_DESC[dGZ.ss];
+
+  // 일일 리포트
+  const r = RPT[dGZ.ss] || RPT['비견'];
+  document.getElementById('rpt-badge').textContent = dGZ.stem + dGZ.branch;
+  document.getElementById('rpt-title').textContent = r.title;
+  document.getElementById('rpt-energy').textContent = `${US_BRIEF[dGZ.us] || dGZ.us} | ${dGZ.ss}의 기운 | ${dGZ.stem}${dGZ.branch}日`;
+  document.getElementById('rpt-main').textContent = r.main + ` 오늘은 ${dGZ.ssBranch} 기질의 지지(${dGZ.branch}) 위에서 ${dGZ.us}의 에너지가 흐릅니다.`;
+  document.getElementById('rpt-work').textContent = r.work;
+  document.getElementById('rpt-rel').textContent = r.rel;
+  document.getElementById('rpt-health').textContent = r.health;
+  document.getElementById('rpt-advice').textContent = r.advice;
+
+  const kwRow = document.getElementById('kw-row');
+  kwRow.innerHTML = '';
+  (r.kw||[]).forEach(k => { const d=document.createElement('div'); d.className='kw g'; d.textContent='✅ '+k; kwRow.appendChild(d); });
+  (r.cw||[]).forEach(k => { const d=document.createElement('div'); d.className='kw c'; d.textContent='⚠️ '+k; kwRow.appendChild(d); });
+
+  // 7일 미리보기
+  const tbody = document.getElementById('week-body');
+  tbody.innerHTML = '';
+  for (let i = 0; i < 7; i++){
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const gz = getDayGZ(d);
+    const col = ssColor(gz.ss);
+    const tr = document.createElement('tr');
+    if (i === 0) tr.className = 'today';
+    tr.innerHTML = `
+      <td class="d-date">${d.getMonth()+1}/${d.getDate()} ${i===0?'(오늘)':''}</td>
+      <td class="d-date">${WD[d.getDay()]}요일</td>
+      <td class="d-gz"><span class="st">${gz.stem}</span><span class="br">${gz.branch}</span> <small style="color:var(--muted);font-size:.7rem">${gz.stemKr}${gz.branchKr}</small></td>
+      <td><span class="d-ss" style="color:${col};border:1px solid ${col}44;background:${col}15">${gz.ss}</span></td>
+      <td class="d-us">${gz.us}</td>
+      <td class="d-brief">${US_BRIEF[gz.us]||gz.us}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function updateTime(){
+  const now = new Date();
+  document.getElementById('hdr-time').textContent =
+    `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} 현재`;
+}
+
+/* ═══════════════════════════════════════════════
+   별 효과
+═══════════════════════════════════════════════ */
+(function createStars(){
+  const c = document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div'); s.className='s';
+    const sz = Math.random()*2+0.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${Math.random()*4+3}s;animation-delay:${Math.random()*4}s`;
+    c.appendChild(s);
+  }
+})();
+
+/* ═══════════════════════════════════════════════
+   초기화 및 타이머
+═══════════════════════════════════════════════ */
+render();
+updateTime();
+setInterval(updateTime, 1000);
+// 자정에 리포트 갱신
+(function scheduleRefresh(){
+  const now = new Date();
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+  setTimeout(()=>{ render(); scheduleRefresh(); }, next-now);
+})();
+</script>
+</body>
+</html>
