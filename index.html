@@ -334,6 +334,15 @@ footer{text-align:center;padding:26px 0;border-top:1px solid var(--border);font-
 </div>
 
 <script>
+/* 🚨 글로벌 에러 핸들러 오버레이 (런타임 진단용) */
+window.onerror = function(message, source, lineno, colno, error) {
+  const errDiv = document.createElement('div');
+  errDiv.style.cssText = "position:fixed;top:0;left:0;right:0;background:rgba(220,38,38,0.95);color:#fff;padding:15px;z-index:9999;font-family:monospace;font-size:12px;white-space:pre-wrap;text-align:left;";
+  errDiv.textContent = `🚨 [자바스크립트 런타임 오류]\n메시지: ${message}\n소스: ${source}\n라인: ${lineno}, 열: ${colno}\n스택: ${error ? error.stack : 'N/A'}`;
+  document.body.appendChild(errDiv);
+  return false;
+};
+
 /* ═══════════════════════════════════════════════
    상수
 ═══════════════════════════════════════════════ */
